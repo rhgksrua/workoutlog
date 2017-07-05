@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/Header';
-import Home from './Home';
 import Exercise from './components/exercise/Exercise';
 import Date from './components/date/Date';
 import AddExerciseButton from './components/exercise/AddExerciseButton';
