@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
+import Home from '../../Home';
+import UserPage from '../user/UserPage';
 
 class Navigation extends Component {
+  constructor(props) {
+    super(props);
+    this.logOut = this.logOut.bind(this);
+  }
+  componentDidMount() {
+  }
+  logOut() {
+    this.props.logOut();
+  }
   render() {
+    let account = null;
+    let logOut = null;
+    if (this.props.username) {
+      account = <Link to={`/${this.props.username}`}>{this.props.username}</Link>;
+      logOut = <button onClick={this.props.logOut}>Sign Out</button>;
+    } else {
+      account = <a href="http://localhost:3000/auth/github">Sign In</a>;
+    }
+
     return (
-      <nav class="menu">
+      <nav className="menu">
         <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="">Sign Up</a></li>
-          <li><a href="">Sign Out</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li>{account}</li>
+          <li>{logOut}</li>
         </ul>
       </nav>
     );

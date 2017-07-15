@@ -11,6 +11,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const jwt = require('express-jwt');
 const authRoutes = require('./routes/auth');
 const passportGithub = require('./passport/githubStrategy');
 
@@ -23,6 +24,11 @@ const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/workoutlog'
 mongoose.connect(mongoURL, {
   useMongoClient: true
 });
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'pug');
+
+app.use('/public', express.static('public'));
 
 app.use(morgan('dev'));
 app.use(cookieParser());

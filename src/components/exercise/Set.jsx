@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-// contains rep and weight
-
 class Set extends Component {
   render() {
     return (
-      <div>
-        REP: 12 WEIGHT: 100
+      <div className="set-container">
+        <p>Rep: 12</p>
+        <p>Weight: 90 lbs</p>
       </div>
     );
   }
 }
 
 export default Set;
+
