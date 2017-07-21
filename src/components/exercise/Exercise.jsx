@@ -13,11 +13,13 @@ class Exercise extends Component {
       backgroundColor: '#E91E63',
       marginLeft: '10px'
     };
+
+    const { name, muscle, sets } = this.props;
     return (
       <div className="exercise-container">
-        <p style={exerStyles}>Name of Exercise</p>
-        <p style={muscleStyles} className="muscle-name">Muscle Name</p>
-        <Sets />
+        <p style={exerStyles}>{name}</p>
+        <p style={muscleStyles} className="muscle-name">{muscle}</p>
+        <Sets sets={sets} />
       </div>
     );
   }

@@ -1,39 +1,130 @@
 import React, { Component } from 'react';
+import { fetchExerciseList, setMuscle, setExercise } from '../../actions/exerciseActions';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import defaultExerciseList from '../../assets/muscles.json';
+import { removeSpaces } from '../helper/helper';
 
 class AddExercise extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'one'};
-    this.handleChange = this.handleChange.bind(this);
+    //console.warn(exerciseList);
+    //console.warn(Object.keys(exerciseList.muscles));
+    this.handleExerciseList = this.handleExerciseList.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidUpdate() {
-    console.log('STATE', this.state);
+  handleExerciseList(e) {
+    this.props.getExercises(e.target.value);
   }
-  handleChange(event) {
-    this.setState({value: event.target.value});
-    console.log(event.target.value);
+  handleSubmit(val) {
+    const { history, myHandleSumbit, match: { params: { username } } } = this.props;
+    console.log('history', history);
+    myHandleSumbit(val, history, username);
   }
   render() {
+    console.log('PROPS!!!!1', this.props);
+    const { myHandleSumbit, handleSubmit, form, currentExercise: { muscle } } = this.props;
+
+    let exerciseList;
+    let listOfExercises = null;
+    let showExercise = null;
+
+    // get all list of muscles
+    const listOfMuscles = Object.keys(defaultExerciseList).map((muscle, key) => {
+      return (
+        <option value={muscle} key={key}>{muscle}</option>
+      );
+    });
+
+    if (this.props.exerciseList[muscle]) {
+      showExercise = true;
+      exerciseList = this.props.exerciseList[muscle];
+      listOfExercises = exerciseList.map((exercise, key) => {
+        return (
+          <option value={exercise} key={key}>{exercise}</option>
+        );
+      });
+    } else {
+      showExercise = false;
+      exerciseList = [];
+    }
+
     return (
       <div className="add-exercise-container">
-        <p>Type</p>
-        <select value={this.state.value} onChange={this.handleChange}>
-          <option value="one">Chest</option>
-          <option value="two">Back</option>
-          <option value="three">Shoulder</option>
-          <option value="four">Legs</option>
-        </select>
-        <p>Exercise (changes for type of muscle)</p>
-        <select>
-          <option value="one">Bench Press</option>
-          <option value="two">two</option>
-          <option value="three">three</option>
-          <option value="four">four</option>
-        </select>
-        <button>Add</button>
+        <form onSubmit={handleSubmit(this.handleSubmit)}>
+          <div>
+            <label htmlFor="muscle">Muscle</label>
+            <div>
+              <Field name="muscle" component="select" onChange={this.handleExerciseList}>
+                <option></option>
+                {listOfMuscles}
+              </Field>
+            </div>
+            {showExercise ? (
+            <div>
+              <Field name="exercise" component="select">
+                <option></option>
+                {listOfExercises}
+              </Field>
+            </div>
+            ) : (
+            <div></div>
+            )}
+          </div>
+          <div>
+            <button type="submit">Add</button>
+          </div>
+        </form>
       </div>
     );
   }
 }
 
-export default AddExercise;
+const AddExerciseFormWrapper = reduxForm({
+  form: 'workout'
+})(AddExercise);
+
+const mapStateToProps = (state, props) => {
+  const { exerciseList, currentExercise } = state;
+  return { exerciseList, currentExercise };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getExercises(muscle) {
+      console.log('list of exercises for', muscle);
+      dispatch(fetchExerciseList(muscle));
+    },
+    muscleAction(muscle) {
+      dispatch(setMuscle(muscle));
+    },
+    exerciseAction(exercise) {
+      dispatch(setExercise(exercise));
+    },
+    myHandleSumbit(val, history, username) {
+      //dispatch(setMuscle(muscle));
+      //dispatch(setExercise(exercise));
+      //const { muscle, exercise } = this.val;
+      if (!val.muscle || !val.exercise) {
+        return;
+      }
+      dispatch(setMuscle(val.muscle));
+      dispatch(setExercise(val.exercise));
+      //console.log('value', val);
+      // set current muscle and exercise to reducer.
+      // send user to summary page
+      //console.log('username', username);
+
+
+      
+      const path = `/${username}/${removeSpaces(val.muscle)}/${removeSpaces(val.exercise)}`;
+      const pathQuery = `/${username}/summary/?muscle=${val.muscle}&exercise=${val.exercise}`
+      console.log('created path ----------', path);
+      history.push(pathQuery);
+
+
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExerciseFormWrapper);

@@ -6,6 +6,7 @@ import Exercise from '../exercise/Exercise';
 import AddExercise from '../exercise/AddExercise';
 import Sets from '../exercise/Sets';
 import muscles from '../../assets/muscles.json';
+import { authUserFetch } from '../../actions/userActions';
 
 /**
  *
@@ -25,28 +26,49 @@ class UserPage extends Component {
     const { ping, match: { params: { username } } } = this.props;
     ping(username);
   }
+  componentDidMount() {
+    const currentPath = this.props.match.params.username;
+    this.props.authUser(currentPath);
+  }
+  componentDidUpdate() {
+    const currentPath = this.props.match.params.username;
+    this.props.authUser(currentPath);
+  }
+  /**
+   * 
+   * Check page permission
+   *
+   */
   render() {
     return (
       <div className="user-page-container">
-        <p>Hi, {this.props.match.params.username}</p>
-        <h3>- Today (show date here) +</h3>
-        <button onClick={this.pingserver}>PING</button>
-        <AddExercise />
-        <Exercise />
+        <p>Hi, {this.props.username}</p>
+        {this.props.owner ?
+        <div>
+          <h3>- Today (show date here) +</h3>
+          <AddExercise />
+          <Exercise />
+        </div>
+        :
+        <p>No permission</p>
+        }
       </div>
     );
   }
 };
 
 const mapStateToProps = (state, props) => {
-  console.log('state inside userpage', state);
-  return {};
+  const { exercises, user: { username, owner } } = state;
+  return { username, owner };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    ping: function() {
-      dispatch(isOwnerFetch());
+    authUser: function(currentPath) {
+      dispatch(authUserFetch(currentPath));
+    },
+    ping: function(user) {
+      dispatch(isOwnerFetch(user));
     }
   }
 };

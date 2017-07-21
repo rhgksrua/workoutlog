@@ -1,12 +1,33 @@
 {
-  "muscles": [
-    "Chest",
-    "Back",
-    "Legs",
-    "Shoulders",
-    "Triceps",
-    "Biceps",
-    "Abs",
-    "Cardio"
+  "chest": [
+    "bench press",
+    "incline bench press",
+    "decline bench press"
+  ],
+  "back": [
+    "pull up",
+    "lat pull down",
+    "deadlifet"
+  ],
+  "legs": [
+    "squat",
+    "calf raise"
+  ],
+  "shoulders": [
+    "shoulder press",
+    "lat raise"
+  ],
+  "triceps": [
+    "rope pull down",
+    "hammer down"
+  ],
+  "biceps": [
+    "dumbbell curl",
+    "cable curl"
+  ],
+  "abs": [
+    "sit up",
+    "crunch",
+    "leg raise"
   ]
 }

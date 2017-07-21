@@ -26,13 +26,14 @@ export const logOut = () => {
  * Checks if user has access to page
  *
  */
-export const isOwner = () => {
+export const isOwner = (owner) => {
   return {
-    type: IS_OWNER
+    type: IS_OWNER,
+    owner 
   };
 }
 
-export const isOwnerFetch = (user) => {
+export const isOwnerFetch = (user, currentPath) => {
   return dispatch => {
     const token = getToken();
     if (!token) {
@@ -42,10 +43,12 @@ export const isOwnerFetch = (user) => {
     }
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
     const options = {
       headers,
       credentials: 'same-origin',
       method: 'post',
+      body: JSON.stringify({ user, currentPath })
     }
 
     return fetch(
@@ -58,7 +61,7 @@ export const isOwnerFetch = (user) => {
         if (data.error) {
           throw new Error(data.error);
         }
-        dispatch(isOwner());
+        dispatch(isOwner(data.isOwner));
       })
       .catch(err => {
         console.error(err);
@@ -74,16 +77,18 @@ export const isOwnerFetch = (user) => {
  * Used to fetch jwt from server
  *
  */
-export const authUserFetch = () => {
+export const authUserFetch = (currentPath) => {
   return dispatch => {
     const token = getToken();
     if (!token) return;
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
     const options = {
       headers,
       credentials: 'same-origin',
       method: 'post',
+      body: JSON.stringify({ currentPath })
     }
 
     return fetch(
@@ -97,6 +102,7 @@ export const authUserFetch = () => {
           throw new Error(data.error);
         }
         dispatch(addUser(data.username));
+        dispatch(isOwner(data.isOwner));
       })
       .catch(err => {
         console.error(err);

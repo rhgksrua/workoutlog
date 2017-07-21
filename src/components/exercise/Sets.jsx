@@ -5,11 +5,21 @@ import Set from './Set';
 
 class Sets extends Component {
   render() {
+    console.log('------- sets', this.props.sets);
+    const { sets } = this.props;
+    const setsElements = sets.map((set, index) => {
+      return (
+        <Set 
+          key={index}
+          rep={set.rep}
+          weight={set.weight}
+        />
+      );
+    });
+
     return (
       <div className="sets-container">
-        <Set />
-        <Set />
-        <Set />
+        {setsElements}
       </div>
     );
   }

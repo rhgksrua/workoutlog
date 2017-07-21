@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const ejwt = require('express-jwt');
 const router = express.Router();
 
+
 // Access to env var
 require('dotenv').config();
 
@@ -18,16 +19,49 @@ router.post('/owner',
   ejwt({secret: process.env.JWT_SECRET}),
   function(req, res) {
     console.log('req.user', req.user);
-    res.json({test: 'yup it works'});
+    console.log('req.body', req.body);
+    const { user: { username }, body: { user } } = req;
+    console.log('destruct', username, user);
+    if (username === user) {
+      return res.json({isOwner: true});
+    }
+    res.json({isOwner: false});
   }
 );
 
-router.post('/user', function(req, res) {
-  const auth = req.get('Authorization');
-  const token = req.headers.authorization.split(' ')[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const username = decoded.username;
-  res.json({ username });
+/**
+ *
+ * checks if user is logged in
+ *
+ * also, checks if current page is authorized for user
+ *
+ * If fetch request is missing jwt, it will 404.
+ *
+ * should also return workout data
+ *
+ */
+router.post('/user', 
+  ejwt({secret: process.env.JWT_SECRET}),
+  function(req, res) {
+    const auth = req.get('Authorization');
+    const username = req.user.username;
+    const currentPath = req.body.currentPath;
+    if (username === currentPath) {
+      return res.json({ username, isOwner: true });
+    }
+    res.json({ username, isOwner: false });
+  }
+);
+
+router.post('/user/exercises', function(req, res) {
+  console.log(req.body);
+  res.json({ 
+    name: 'name of muscle',
+    list: [
+      'pull up',
+      'lat pull down'
+    ]
+  });
 });
 
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));

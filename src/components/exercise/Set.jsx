@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 class Set extends Component {
   render() {
+    const { rep, weight } = this.props;
     return (
       <div className="set-container">
-        <p>Rep: 12</p>
-        <p>Weight: 90 lbs</p>
+        <p>Rep: {rep}</p>
+        <p>Weight: {weight} lbs</p>
       </div>
     );
   }
