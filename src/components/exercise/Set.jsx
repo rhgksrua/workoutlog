@@ -2,11 +2,26 @@ import React, { Component } from 'react';
 
 class Set extends Component {
   render() {
-    const { rep, weight } = this.props;
+    const { reps, weight } = this.props;
+    const columnStyle = {
+    };
+    const columnsStyle = {
+      backgroundColor: '#d8d8d8',
+      marginBottom: '20px'
+
+    };
+
     return (
-      <div className="set-container">
-        <p>Rep: {rep}</p>
-        <p>Weight: {weight} lbs</p>
+      <div style={columnsStyle} className="columns">
+        <div  className="column">
+          <div style={columnStyle} className="notification">NOTE</div>
+        </div>
+        <div  className="column">
+          <div style={columnStyle} className="notification">{reps} reps</div>
+        </div>
+        <div className="column">
+          <div style={columnStyle} className="notification">{weight} lbs</div>
+        </div>
       </div>
     );
   }

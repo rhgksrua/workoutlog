@@ -5,20 +5,24 @@ import Set from './Set';
 
 class Sets extends Component {
   render() {
-    console.log('------- sets', this.props.sets);
     const { sets } = this.props;
-    const setsElements = sets.map((set, index) => {
-      return (
-        <Set 
-          key={index}
-          rep={set.rep}
-          weight={set.weight}
-        />
-      );
-    });
+    let setsElements;
+    if (!sets) {
+      setsElements = [];
+    } else {
+      setsElements = sets.map((set, index) => {
+        return (
+          <Set 
+            key={index}
+            reps={set.reps}
+            weight={set.weight}
+          />
+        );
+      });
+    }
 
     return (
-      <div className="sets-container">
+      <div className="section sets-container">
         {setsElements}
       </div>
     );

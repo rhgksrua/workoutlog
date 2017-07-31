@@ -3,7 +3,7 @@ import { fetchExerciseList, setMuscle, setExercise } from '../../actions/exercis
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import defaultExerciseList from '../../assets/muscles.json';
-import { removeSpaces } from '../helper/helper';
+//import { removeSpaces } from '../helper/helper';
 
 class AddExercise extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class AddExercise extends Component {
   }
   render() {
     console.log('PROPS!!!!1', this.props);
-    const { myHandleSumbit, handleSubmit, form, currentExercise: { muscle } } = this.props;
+    const { handleSubmit, form, currentExercise: { muscle } } = this.props;
 
     let exerciseList;
     let listOfExercises = null;
@@ -53,16 +53,26 @@ class AddExercise extends Component {
       <div className="add-exercise-container">
         <form onSubmit={handleSubmit(this.handleSubmit)}>
           <div>
-            <label htmlFor="muscle">Muscle</label>
-            <div>
-              <Field name="muscle" component="select" onChange={this.handleExerciseList}>
+            <div className="muscle-select-container">
+              <label className={"label"} htmlFor="muscle">Muscle</label>
+              <Field 
+                className={"select"}
+                name="muscle" 
+                component="select" 
+                onChange={this.handleExerciseList}
+              >
                 <option></option>
                 {listOfMuscles}
               </Field>
             </div>
             {showExercise ? (
-            <div>
-              <Field name="exercise" component="select">
+            <div className="exercise-select-container">
+              <label className={"label"} htmlFor="exercise">Exercise</label>
+              <Field 
+                className={"select"}
+                name="exercise" 
+                component="select"
+              >
                 <option></option>
                 {listOfExercises}
               </Field>
@@ -72,7 +82,12 @@ class AddExercise extends Component {
             )}
           </div>
           <div>
-            <button type="submit">Add</button>
+            <button 
+              className={"button"}
+              type="submit"
+            >
+              Add
+            </button>
           </div>
         </form>
       </div>
@@ -110,17 +125,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
       dispatch(setMuscle(val.muscle));
       dispatch(setExercise(val.exercise));
-      //console.log('value', val);
-      // set current muscle and exercise to reducer.
-      // send user to summary page
-      //console.log('username', username);
-
-
-      
-      const path = `/${username}/${removeSpaces(val.muscle)}/${removeSpaces(val.exercise)}`;
-      const pathQuery = `/${username}/summary/?muscle=${val.muscle}&exercise=${val.exercise}`
-      console.log('created path ----------', path);
-      history.push(pathQuery);
+      const path = `/${username}/${val.muscle}/${val.exercise}`;
+      history.push(path);
 
 
     }

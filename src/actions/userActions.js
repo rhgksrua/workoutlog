@@ -3,7 +3,8 @@ import { getToken } from '../lib/libs';
 import {
   ADD_USER,
   LOG_OUT,
-  IS_OWNER
+  IS_OWNER,
+  NOT_OWNER
 } from './actionTypes';
 
 export const addUser = (username) => {
@@ -31,11 +32,18 @@ export const isOwner = (owner) => {
     type: IS_OWNER,
     owner 
   };
-}
+};
+
+export const userNotLoggedIn = () => {
+  return {
+    type: NOT_OWNER
+  };
+};
 
 export const isOwnerFetch = (user, currentPath) => {
   return dispatch => {
     const token = getToken();
+    console.log('before token');
     if (!token) {
       // should dispatch action that says user does not own the page
       console.log('token missing. User needs to signin');
@@ -80,7 +88,10 @@ export const isOwnerFetch = (user, currentPath) => {
 export const authUserFetch = (currentPath) => {
   return dispatch => {
     const token = getToken();
-    if (!token) return;
+    if (!token) {
+      dispatch(userNotLoggedIn());
+      return;
+    }
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
     headers.append('Content-Type', 'application/json');

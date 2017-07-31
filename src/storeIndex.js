@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
-import workout from './module';
 import reducer from './reducers/reducer';
 import logger from 'redux-logger';
 

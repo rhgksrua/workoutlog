@@ -1,8 +1,13 @@
 export const ADD_USER = 'ADD_USER';
+export const UPDATE_DATE = 'UPDATE_DATE';
 export const LOG_OUT = 'LOG_OUT';
 export const IS_OWNER = 'IS_OWNER';
+export const NOT_OWNER = 'NOT_OWNER';
+export const SET_DATE = 'SET_DATE';
 export const ADD_EXERCISE = 'ADD_EXERCISE';
 export const ADD_MUSCLE = 'ADD_MUSCLE';
 export const ADD_SET = 'ADD_SET';
+export const ADD_SETS_ALL = 'ADD_SETS_ALL';
+export const ADD_ALL_SETS = 'ADD_ALL_SETS';
 export const SET_CURRENT_MUSCLE = 'SET_CURRENT_MUSCLE';
 export const SET_CURRENT_EXERCISE = 'SET_CURRENT_EXERCISE';

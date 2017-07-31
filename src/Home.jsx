@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { authUserFetch, logOut } from './actions/userActions';
+import { authUserFetch } from './actions/userActions';
 
 import Header from './components/header/Header';
 import './Home.css';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     // check for permission and username
     // if username and token exists

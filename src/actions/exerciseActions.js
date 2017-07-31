@@ -1,9 +1,180 @@
 import {
-  ADD_EXERCISE,
-  ADD_MUSCLE,
+  ADD_SET,
+  ADD_SETS_ALL,
+  ADD_ALL_SETS,
+  SET_DATE,
   SET_CURRENT_MUSCLE,
   SET_CURRENT_EXERCISE
 } from './actionTypes';
+
+// need to rename add sets all
+
+import { getToken } from '../lib/libs';
+
+export const setDate = (year, month, date) => {
+  return {
+    type: SET_DATE,
+    year,
+    month,
+    date
+  }
+}
+
+export const addAllSets = exercises => {
+  return {
+    type: ADD_ALL_SETS,
+    exercises
+  }
+};
+
+export const fetchAllSets = (year, month, date) => {
+  return dispatch => {
+
+    const token = getToken();
+    if (!token) {
+      // should dispatch action that says user does not own the page
+      console.log('token missing. User needs to signin');
+      return;
+    }
+
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      credentials: 'same-origin',
+      method: 'post',
+      body: JSON.stringify({ year, month, date })
+    }
+
+    return fetch(
+      `${window.location.protocol}//${window.location.host}/auth/user/exercises/sets/all`, 
+      options)
+        .then(data => {
+          return data.json();
+        })
+      .then(data => {
+        console.log('response from server', data);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        if (!data.status) {
+          console.warn('exercise not found');
+        } else {
+          dispatch(addAllSets(data.exercises));
+          console.log('ADD ALL SETS HERE');
+        }
+
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+};
+
+export const fetchSets = (muscle, exercise, year, month, date) => {
+  return dispatch => {
+
+    const token = getToken();
+    if (!token) {
+      // should dispatch action that says user does not own the page
+      console.log('token missing. User needs to signin');
+      return;
+    }
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      credentials: 'same-origin',
+      method: 'post',
+      body: JSON.stringify({ muscle, exercise, year, month, date })
+    }
+    return fetch(
+      `${window.location.protocol}//${window.location.host}/auth/user/exercises/sets`, options)
+        .then(data => {
+          return data.json();
+        })
+      .then(data => {
+        console.log('response from server', data);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        //dispatch(addSet(set, muscle, exercise, year, month, date));
+        if (!data.status) {
+          console.warn('exercise not found');
+        } else {
+          dispatch(addInitialSets(data.exercises[0]));
+        }
+
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+}
+
+/**
+ * Add
+ *
+ * @returns {undefined}
+ */
+const addInitialSets = (exercise) => {
+  return {
+    type: ADD_SETS_ALL,
+    exercise
+  };
+}
+
+export const addSet = (set, muscle, exercise, year, month, date) => {
+  return {
+    type: ADD_SET,
+    set,
+    muscle,
+    exercise,
+    year,
+    month,
+    date
+  };
+};
+
+export const addSetAction = (set, muscle, exercise, year, month, date) => {
+  return dispatch => {
+
+    const token = getToken();
+    if (!token) {
+      // should dispatch action that says user does not own the page
+      console.log('token missing. User needs to signin');
+      return;
+    }
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      credentials: 'same-origin',
+      method: 'put',
+      body: JSON.stringify({ set, muscle, exercise, year, month, date })
+    }
+    return fetch(
+      `${window.location.protocol}//${window.location.host}/auth/user/exercises`, options)
+        .then(data => {
+          return data.json();
+        })
+      .then(data => {
+        console.log('response from server', data);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        dispatch(addSet(set, muscle, exercise, year, month, date));
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    
+  };
+}
+
 
 export const setMuscle = (muscle) => {
   return {
@@ -80,7 +251,6 @@ export const fetchListOfExercises = (muscle) => {
         })
       .then(data => {
         console.log('response from server', data);
-        console.warn('hello?');
         if (data.error) {
           throw new Error(data.error);
         }

@@ -17,6 +17,8 @@ const passportGithub = require('./passport/githubStrategy');
 
 require('dotenv').config();
 
+mongoose.Promise = require('bluebird');
+
 const app = express();
 
 const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/workoutlog';
@@ -42,6 +44,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+
 passportGithub(passport);
 app.use(passport.initialize());
 app.use(passport.session());
