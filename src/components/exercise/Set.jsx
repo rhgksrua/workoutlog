@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Set extends Component {
   render() {
@@ -26,6 +27,11 @@ class Set extends Component {
     );
   }
 }
+
+Set.propTypes = {
+  reps: PropTypes.number,
+  weight: PropTypes.number
+};
 
 export default Set;
 

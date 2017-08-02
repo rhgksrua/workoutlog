@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Exercise from './Exercise';
 
 class Exercises extends Component {
@@ -22,5 +23,9 @@ class Exercises extends Component {
   }
 
 }
+
+Exercises.propTypes = {
+  exercises: PropTypes.array
+};
 
 export default Exercises;

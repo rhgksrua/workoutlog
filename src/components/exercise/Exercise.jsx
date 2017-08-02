@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Sets from './Sets';
 
 class Exercise extends Component {
@@ -30,5 +31,11 @@ class Exercise extends Component {
     );
   }
 }
+
+Exercise.propTypes = {
+  name: PropTypes.string,
+  muscle: PropTypes.string,
+  sets: PropTypes.array
+};
 
 export default Exercise;

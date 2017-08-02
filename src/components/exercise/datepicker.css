@@ -1,0 +1,10 @@
+.datepicker {
+  height: 2.25em;
+  font-size: 1.2em;
+  padding: 1em;
+  width: 100%
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}

@@ -58,7 +58,7 @@ router.post('/user',
 router.post('/user/exercises', function(req, res) {
   console.log(req.body);
   res.json({ 
-    name: 'name of muscle',
+    name: '',
     list: [
       'pull up',
       'lat pull down'

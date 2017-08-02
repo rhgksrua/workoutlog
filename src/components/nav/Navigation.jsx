@@ -13,11 +13,19 @@ class Navigation extends Component {
     let account = null;
     let logOut = null;
     let addWorkout = null;
+
+    const navStyle = {
+      border: '1px solid #ffdd57'
+    };
+
+    const logOutStyle = {
+      cursor: 'pointer'
+    };
     
     // show user if logged in.
     if (this.props.username) {
       account = <Link className={"navbar-item"} to={`/${this.props.username}`}>{this.props.username}</Link>;
-      logOut = <div className={"navbar-item"} onClick={this.props.logOut}>Sign Out</div>;
+      logOut = <div style={logOutStyle}className={"navbar-item logout"} onClick={this.props.logOut}>Sign Out</div>;
       addWorkout = <Link className={"navbar-item"} to={`/${this.props.username}/add`}>ADD WORKOUT</Link>;
     } else {
       account = <a className={"navbar-item"} href="http://localhost:3000/auth/github">Sign In</a>;
@@ -25,7 +33,7 @@ class Navigation extends Component {
 
 
     return (
-      <nav className="navbar">
+      <nav style={navStyle} className="navbar">
         <div className="navbar-brand">
           <Link className={"navbar-item"} to="/">Home</Link>
           {addWorkout}

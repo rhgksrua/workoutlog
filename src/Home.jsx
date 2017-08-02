@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { authUserFetch } from './actions/userActions';
 
@@ -15,13 +16,16 @@ class Home extends Component {
   }
   render() {
     return (
-      <div className="home-container">
+      <div className="section home-container">
         <Header />
-        <p>Sign up to start!</p>
       </div>
     );
   }
 };
+
+Home.propTypes = {
+  username: PropTypes.string
+}
 
 const mapStateToProps = (state, props) => {
   const { user: { username } } = state;

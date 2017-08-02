@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSetAction, fetchSets } from '../../actions/exerciseActions';
 import { authUserFetch } from '../../actions/userActions';
@@ -94,6 +95,14 @@ const filterToday = (all, exerciseParam, muscleParam, year, month, date) => {
   return {};
 }
 
+ExerciseSummary.propTypes = {
+  currentDate: PropTypes.object,
+  year: PropTypes.string,
+  month: PropTypes.string,
+  date: PropTypes.string,
+  allExercises: PropTypes.array,
+  currentExercise: PropTypes.object
+};
 
 const mapStateToProps = (state, props) => {
   const { 
