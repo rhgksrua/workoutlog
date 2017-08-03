@@ -8,23 +8,38 @@ import { authUserFetch, logOut } from './actions/userActions';
 //import './reset.css';
 import './App.css';
 
+import AuthRoute from './AuthRoute';
 import Navigation from './components/nav/Navigation';
 import Home from './Home';
 import Summary from './components/exercise/Summary';
 import AddExercise from './components/exercise/AddExercise';
 import ExerciseSummary from './components/exercise/ExerciseSummary';
+import SignUp from './SignUp';
 
 class App extends Component {
+  componentDidMount() {
+    const { 
+      authUser ,
+      location: {
+        pathname
+      }
+    } = this.props;
+    authUser(pathname);
+  }
   render() {
-    const { username, logOut } = this.props;
+    const { 
+      username, 
+      logOut
+    } = this.props;
     return (
       <div className="container">
         <Navigation username={username} logOut={logOut}/>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/:username/add" component={AddExercise} />
-          <Route path="/:username/:muscle/:exercise" component={ExerciseSummary} />
-          <Route path="/:username" component={Summary} />
+          <Route exact path="/signup" component={SignUp} />
+          <AuthRoute path="/:username/add" component={AddExercise} />
+          <AuthRoute path="/:username/:muscle/:exercise" component={ExerciseSummary} />
+          <AuthRoute path="/:username" component={Summary} />
         </Switch>
       </div>
     );
@@ -37,7 +52,11 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const { user: { username } } = state;
+  const { 
+    user: { 
+      username 
+    }
+  } = state;
   return { username };
 };
 
