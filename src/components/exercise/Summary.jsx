@@ -36,7 +36,7 @@ class Summary extends Component {
     } = this.props;
 
     const currentPath = username;
-    authUser(currentPath);
+    //authUser(currentPath);
 
     this.props.getAllSets(year, month, date);
   }

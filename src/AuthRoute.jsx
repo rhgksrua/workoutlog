@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Route,
-  Redirect,
-  withRouter
+import { Route, Redirect, withRouter } from 'react-router-dom';
+import { authUserFetch } from './actions/userActions';
 
-} from 'react-router-dom';
 
 /**
  * Hides summary page if missing muscle and exercise
@@ -16,35 +13,62 @@ class AuthRoute extends Component {
   constructor(props) {
     super(props);
   }
+  componentWillMount() {
+    const { location, authUser } = this.props;
+    console.log('--- SENT TO SERVER', location.pathname);
+    
+    authUser(location.pathname);
+  }
   render() {
     // grab currentExercise from reducer
     //
     const { 
-      username,
-      component: Component, ...rest 
+      dirty,
+      pending,
+      authUser,
+      match,
+      location,
+      owner,
+      component: Component, ...rest
     } = this.props;
+    //console.log('--- match', location);
 
+    // check for log in status here
 
     return (
-      <Route {...rest} render={props => (
-        username ? (
+      <Route {...rest} render={props => {
+        console.log('-- dirty pending', dirty, pending);
+        if (!dirty || pending) {
+          console.error('NOT DIRTY');
+          return <div>Loading</div>
+        }
+        console.log('-- OWNER', owner);
+        return owner ? (
           <Component {...props} />
-        ) : (
+          ) : (
           <Redirect to={{
-              pathname: '/signup',
-              state: { from: props.location }
+            pathname: '/signup',
+            state: { from: props.location }
             }} 
           />
-        )
-      )}/>
+          );
+      }}/>
     );
   }
 }
 
 const mapStateToProps = (state, props) => {
-  const { user: { username} } = state;
-  return { username };
+  const { user: { pending, owner, dirty } } = state;
+  return { pending, dirty, owner };
 };
 
-export default withRouter(connect(mapStateToProps, null)(AuthRoute));
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    authUser: function(currentPath) {
+      dispatch(authUserFetch(currentPath, true));
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthRoute));
 

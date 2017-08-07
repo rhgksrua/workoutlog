@@ -19,12 +19,12 @@ import SignUp from './SignUp';
 class App extends Component {
   componentDidMount() {
     const { 
-      authUser ,
+      //authUser ,
       location: {
-        pathname
+        //pathname
       }
     } = this.props;
-    authUser(pathname);
+    //authUser(pathname);
   }
   render() {
     const { 

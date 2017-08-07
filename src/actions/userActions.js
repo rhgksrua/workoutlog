@@ -4,15 +4,22 @@ import {
   ADD_USER,
   LOG_OUT,
   IS_OWNER,
-  NOT_OWNER
+  NOT_OWNER,
+  PENDING_USER
 } from './actionTypes';
 
-export const addUser = (username) => {
+export const addUser = payload => {
   return {
     type: ADD_USER,
-    username
+    payload
   };
 };
+
+export const pendingUser = () => {
+  return {
+    type: PENDING_USER
+  };
+}
 
 export const logOut = () => {
   // remove token
@@ -42,6 +49,7 @@ export const userNotLoggedIn = () => {
 
 export const isOwnerFetch = (user, currentPath) => {
   return dispatch => {
+    console.log('-- isOwnerFetch action');
     const token = getToken();
     console.log('before token');
     if (!token) {
@@ -85,8 +93,9 @@ export const isOwnerFetch = (user, currentPath) => {
  * Used to fetch jwt from server
  *
  */
-export const authUserFetch = (currentPath) => {
+export const authUserFetch = (currentPath, redirect = false) => {
   return dispatch => {
+    console.warn('-- authUserFetch action');
     const token = getToken();
     if (!token) {
       dispatch(userNotLoggedIn());
@@ -102,6 +111,7 @@ export const authUserFetch = (currentPath) => {
       body: JSON.stringify({ currentPath })
     }
 
+    dispatch(pendingUser());
     return fetch(
       `${window.location.protocol}//${window.location.host}/auth/user`, options)
         .then(data => {
@@ -112,8 +122,10 @@ export const authUserFetch = (currentPath) => {
         if (data.error) {
           throw new Error(data.error);
         }
-        dispatch(addUser(data.username));
-        dispatch(isOwner(data.isOwner));
+        // Order is important here.  Protected route redirect user based on ownership
+        // of summary page.  If username is updated first, owner prop remains false
+        //dispatch(isOwner(data.isOwner));
+        dispatch(addUser({ username: data.username, owner: data.isOwner }));
       })
       .catch(err => {
         console.error(err);

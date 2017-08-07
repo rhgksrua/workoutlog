@@ -48,7 +48,8 @@ router.post('/user',
     const auth = req.get('Authorization');
     const username = req.user.username;
     const currentPath = req.body.currentPath;
-    if (username === currentPath) {
+    console.log(username, currentPath);
+    if ('/' + username === currentPath) {
       return res.json({ username, isOwner: true });
     }
     res.json({ username, isOwner: false });

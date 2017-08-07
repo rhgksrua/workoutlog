@@ -14,27 +14,37 @@ import {
   ADD_ALL_SETS,
   SET_CURRENT_MUSCLE,
   SET_CURRENT_EXERCISE,
-  UPDATE_DATE
+  PENDING_USER
 } from '../actions/actionTypes';
 
 const userInitialState = {
+  dirty: false,
+  pending: false,
   username: '',
   owner: false
 };
 
 function user(state = userInitialState, action) {
   switch(action.type) {
+    case PENDING_USER:
+      return { ...state, pending: true, dirty: true };
     case ADD_USER:
-      return { ...state, username: action.username };
+      return { 
+        ...state, 
+        username: action.payload.username, 
+        owner: action.payload.owner, 
+        pending: false, 
+        dirty: true 
+      };
     case LOG_OUT:
-      return { ...state, username: '', owner: false };
+      return { ...state, username: '', owner: false, pending: false, dirty: true };
     case NOT_OWNER:
-      console.log('NOT_OWNER');
-      return { ...state, owner: false };
+      //console.log('NOT_OWNER');
+      return { ...state, owner: false, pending: false, dirty: true };
     case IS_OWNER:
       // checks if user is the owner of the current page.
-      console.log('IS_WNOER');
-      return { ...state, owner: action.owner }
+      //console.log('IS_OWNER');
+      return { ...state, owner: action.owner, pending: false, dirty: true }
     default:
       return state;
   }
