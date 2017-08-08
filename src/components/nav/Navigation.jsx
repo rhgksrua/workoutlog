@@ -6,6 +6,11 @@ class Navigation extends Component {
     super(props);
     this.logOut = this.logOut.bind(this);
   }
+  componentWillMount() {
+    // authenticates user here.
+    console.warn('WHY!!!');
+    this.props.authUser();
+  }
   logOut() {
     this.props.logOut();
   }

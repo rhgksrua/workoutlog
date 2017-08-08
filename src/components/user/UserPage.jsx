@@ -28,11 +28,11 @@ class UserPage extends Component {
   }
   componentDidMount() {
     const currentPath = this.props.match.params.username;
-    this.props.authUser(currentPath);
+    //this.props.authUser(currentPath);
   }
   componentDidUpdate() {
     const currentPath = this.props.match.params.username;
-    this.props.authUser(currentPath);
+    //this.props.authUser(currentPath);
   }
   /**
    * 

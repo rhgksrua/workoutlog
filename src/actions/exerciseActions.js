@@ -236,6 +236,7 @@ function shouldFetchList(state, muscle) {
 
 export const fetchListOfExercises = (muscle) => {
   return dispatch => {
+    console.log('-- fetchListOfExercises action');
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const options = {
@@ -263,3 +264,4 @@ export const fetchListOfExercises = (muscle) => {
     
   };
 }
+

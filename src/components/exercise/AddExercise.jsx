@@ -17,7 +17,7 @@ class AddExercise extends Component {
   }
   componentDidMount() {
     const { authUser } = this.props;
-    authUser();
+    //authUser();
   }
   handleExerciseList(e) {
     this.props.getExercises(e.target.value);

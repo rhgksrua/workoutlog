@@ -24,7 +24,7 @@ router.post('/owner',
     console.log('req.body', req.body);
     const { user: { username }, body: { user } } = req;
     console.log('destruct', username, user);
-    if (username === user) {
+    if ('/' + username === user) {
       return res.json({isOwner: true});
     }
     res.json({isOwner: false});

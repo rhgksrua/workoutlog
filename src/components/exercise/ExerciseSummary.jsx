@@ -30,7 +30,8 @@ class ExerciseSummary extends Component {
     this.props.getSets(muscle, exercise, year, month, date);
 
     // need to get user
-    this.props.authUser();
+    console.warn('exercise summary auth');
+    //this.props.authUser();
   }
   render() {
     const { 

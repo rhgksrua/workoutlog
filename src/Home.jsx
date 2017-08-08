@@ -6,14 +6,12 @@ import { authUserFetch } from './actions/userActions';
 import Header from './components/header/Header';
 import './Home.css';
 
+/**
+ * Don't have to authenticate in here.
+ * Navigation authenticates for all routes
+ */
+
 class Home extends Component {
-  componentDidMount() {
-    // check for permission and username
-    // if username and token exists
-    this.props.authUser();
-  }
-  permission() {
-  }
   render() {
     return (
       <div className="section home-container">

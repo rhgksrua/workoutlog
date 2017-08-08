@@ -49,17 +49,21 @@ export const userNotLoggedIn = () => {
 
 export const isOwnerFetch = (user, currentPath) => {
   return dispatch => {
+
     console.log('-- isOwnerFetch action');
+
     const token = getToken();
-    console.log('before token');
+
     if (!token) {
       // should dispatch action that says user does not own the page
       console.log('token missing. User needs to signin');
       return;
     }
+
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
     headers.append('Content-Type', 'application/json');
+
     const options = {
       headers,
       credentials: 'same-origin',

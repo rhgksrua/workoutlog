@@ -15,6 +15,7 @@ import Summary from './components/exercise/Summary';
 import AddExercise from './components/exercise/AddExercise';
 import ExerciseSummary from './components/exercise/ExerciseSummary';
 import SignUp from './SignUp';
+import OwnerRoute from './components/routing/OwnerRoute';
 
 class App extends Component {
   componentDidMount() {
@@ -29,17 +30,18 @@ class App extends Component {
   render() {
     const { 
       username, 
-      logOut
+      logOut,
+      authUser
     } = this.props;
     return (
       <div className="container">
-        <Navigation username={username} logOut={logOut}/>
+        <Navigation username={username} logOut={logOut} authUser={authUser}/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={SignUp} />
-          <AuthRoute path="/:username/add" component={AddExercise} />
-          <AuthRoute path="/:username/:muscle/:exercise" component={ExerciseSummary} />
-          <AuthRoute path="/:username" component={Summary} />
+          <OwnerRoute path="/:username/add" component={AddExercise} />
+          <OwnerRoute path="/:username/:muscle/:exercise" component={ExerciseSummary} />
+          <OwnerRoute path="/:username" component={Summary} />
         </Switch>
       </div>
     );
