@@ -8,7 +8,6 @@ import { authUserFetch, logOut } from './actions/userActions';
 //import './reset.css';
 import './App.css';
 
-import AuthRoute from './AuthRoute';
 import Navigation from './components/nav/Navigation';
 import Home from './Home';
 import Summary from './components/exercise/Summary';
@@ -18,15 +17,6 @@ import SignUp from './SignUp';
 import OwnerRoute from './components/routing/OwnerRoute';
 
 class App extends Component {
-  componentDidMount() {
-    const { 
-      //authUser ,
-      location: {
-        //pathname
-      }
-    } = this.props;
-    //authUser(pathname);
-  }
   render() {
     const { 
       username, 

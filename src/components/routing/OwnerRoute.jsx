@@ -10,12 +10,8 @@ import { isOwnerFetch } from '../../actions/userActions';
  * @returns {undefined}
  */
 class OwnerRoute extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentWillMount() {
     const { location, isOwner } = this.props;
-    console.log('--- SENT TO SERVER', location.pathname);
     
     isOwner(location.pathname);
   }
@@ -33,25 +29,16 @@ class OwnerRoute extends Component {
       component: Component, ...rest
     } = this.props;
 
-    console.log('-- props', this.props);
-
-
     // check for log in status here
 
-    //console.log('---- match param username', location.pathname);
     const currentPath = location.pathname.split('/')[1];
-    console.log('currentPath ---', currentPath);
 
     return (
       <Route {...rest} render={props => {
-        console.log('-- dirty pending', dirty, pending);
         if (!dirty || pending) {
-          console.error('NOT DIRTY');
           return <div>Loading</div>
         }
-        console.log('-- OWNER', owner);
         // should check username and the current path
-        console.log('*** username currentPath', username, currentPath);
         return username === currentPath ? (
           <Component {...props} />
           ) : (

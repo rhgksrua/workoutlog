@@ -4,8 +4,6 @@ import Sets from './Sets';
 
 class Exercise extends Component {
   render() {
-    const { summary } = this.props;
-
     const exerStyles = {
       display: 'inline-block'
     };

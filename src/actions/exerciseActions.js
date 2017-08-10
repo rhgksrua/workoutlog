@@ -62,7 +62,6 @@ export const fetchAllSets = (year, month, date) => {
           console.warn('exercise not found');
         } else {
           dispatch(addAllSets(data.exercises));
-          console.log('ADD ALL SETS HERE');
         }
 
       })

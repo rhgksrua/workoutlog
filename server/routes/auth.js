@@ -14,16 +14,12 @@ require('dotenv').config();
 
 router.get('/', function(req, res) {
   res.render('authCallback');
-  //res.send('nothing here');
 });
 
 router.post('/owner', 
   ejwt({secret: process.env.JWT_SECRET}),
   function(req, res) {
-    console.log('req.user', req.user);
-    console.log('req.body', req.body);
     const { user: { username }, body: { user } } = req;
-    console.log('destruct', username, user);
     if ('/' + username === user) {
       return res.json({isOwner: true});
     }
@@ -48,7 +44,6 @@ router.post('/user',
     const auth = req.get('Authorization');
     const username = req.user.username;
     const currentPath = req.body.currentPath;
-    console.log(username, currentPath);
     if ('/' + username === currentPath) {
       return res.json({ username, isOwner: true });
     }
@@ -57,7 +52,6 @@ router.post('/user',
 );
 
 router.post('/user/exercises', function(req, res) {
-  console.log(req.body);
   res.json({ 
     name: '',
     list: [
@@ -67,11 +61,17 @@ router.post('/user/exercises', function(req, res) {
   });
 });
 
+/**
+ * TODO
+ *
+ * need to setup custom user exercise list
+ *
+ * user can add or remove exercises
+ *
+ */
 router.post('/user/exercises/sets',
   ejwt({secret: process.env.JWT_SECRET}),
   function(req, res) {
-    console.log('user', req.user);
-    console.log('body', req.body);
     const {
       muscle,
       exercise,
@@ -88,7 +88,6 @@ router.post('/user/exercises/sets',
       username: req.user.username
     };
     Exercise.find(query, function(err, exercises) {
-      console.log('---- exercises', exercises);
       if (exercises.length > 0) {
         return res.json({status: true, error: false, exercises});
       } else {
@@ -101,8 +100,6 @@ router.post('/user/exercises/sets',
 router.post('/user/exercises/sets/all',
   ejwt({secret: process.env.JWT_SECRET}),
   function(req, res) {
-    console.log('user', req.user);
-    console.log('body', req.body);
     const {
       year,
       month,
@@ -115,7 +112,6 @@ router.post('/user/exercises/sets/all',
       username: req.user.username
     };
     Exercise.find(query, function(err, exercises) {
-      console.log('---- exercises', exercises);
       if (exercises.length > 0) {
         return res.json({status: true, error: false, exercises});
       } else {
@@ -142,7 +138,6 @@ router.put('/user/exercises',
         date
       } 
     } = req;
-    console.log(set, muscle, exercise, year, month, date);
     // add set to db.
 
     const query = {

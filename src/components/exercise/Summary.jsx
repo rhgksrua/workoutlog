@@ -9,7 +9,6 @@ import './datepicker.css';
 
 import Exercises from '../exercise/Exercises';
 
-import { authUserFetch } from '../../actions/userActions';
 import { setDate, fetchAllSets } from '../../actions/exerciseActions';
 
 class Summary extends Component {
@@ -26,17 +25,8 @@ class Summary extends Component {
         year, 
         month, 
         date
-      },
-      authUser,
-      match: {
-        params: {
-          username
-        }
       }
     } = this.props;
-
-    const currentPath = username;
-    //authUser(currentPath);
 
     this.props.getAllSets(year, month, date);
   }
@@ -54,12 +44,6 @@ class Summary extends Component {
   }
   render() {
     const { 
-      user: { 
-        username = false 
-      }, 
-      exercises: { 
-        allExercises 
-      },
       currentDate: {
         year, 
         month, 
@@ -141,9 +125,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    authUser(currentPath) {
-      dispatch(authUserFetch(currentPath));
-    },
     getAllSets(year, month, date) {
       dispatch(fetchAllSets(year, month, date));
     },

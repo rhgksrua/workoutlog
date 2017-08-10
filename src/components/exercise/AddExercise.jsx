@@ -5,19 +5,12 @@ import { Field, reduxForm } from 'redux-form';
 
 import { fetchExerciseList, setMuscle, setExercise } from '../../actions/exerciseActions';
 import defaultExerciseList from '../../assets/muscles.json';
-import { authUserFetch } from '../../actions/userActions';
 
 class AddExercise extends Component {
   constructor(props) {
     super(props);
-    //console.warn(exerciseList);
-    //console.warn(Object.keys(exerciseList.muscles));
     this.handleExerciseList = this.handleExerciseList.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  componentDidMount() {
-    const { authUser } = this.props;
-    //authUser();
   }
   handleExerciseList(e) {
     this.props.getExercises(e.target.value);
@@ -25,7 +18,6 @@ class AddExercise extends Component {
   handleSubmit(val) {
 
     if (!val.muscle || !val.exercise) {
-      console.log('NOPE!');
       return;
     }
 
@@ -144,11 +136,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    authUser(currentPath) {
-      dispatch(authUserFetch(currentPath));
-    },
     getExercises(muscle) {
-      console.log('list of exercises for', muscle);
       dispatch(fetchExerciseList(muscle));
     },
     muscleAction(muscle) {
@@ -159,7 +147,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     myHandleSumbit(val, history, username) {
       if (!val.muscle || !val.exercise) {
-        console.log('NOPE!');
         return false;
       }
       dispatch(setMuscle(val.muscle));

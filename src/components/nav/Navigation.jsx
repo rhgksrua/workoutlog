@@ -8,7 +8,6 @@ class Navigation extends Component {
   }
   componentWillMount() {
     // authenticates user here.
-    console.warn('WHY!!!');
     this.props.authUser();
   }
   logOut() {

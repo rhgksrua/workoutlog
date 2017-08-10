@@ -9,9 +9,6 @@ import SetForm from './SetForm';
 // shows all sets for a single exercise
 
 class ExerciseSummary extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     const { 
       currentDate: {
@@ -30,13 +27,10 @@ class ExerciseSummary extends Component {
     this.props.getSets(muscle, exercise, year, month, date);
 
     // need to get user
-    console.warn('exercise summary auth');
-    //this.props.authUser();
   }
   render() {
     const { 
       currentDate: { year, month, date },
-      allExercises,
       todayExercise: {
         sets: todaySets
       },
@@ -48,10 +42,6 @@ class ExerciseSummary extends Component {
       },
       addSet
     } = this.props;
-
-    const incDecBtnStyle = {
-      width: '50px'
-    };
 
     return (
       <div>
@@ -101,7 +91,6 @@ ExerciseSummary.propTypes = {
   year: PropTypes.string,
   month: PropTypes.string,
   date: PropTypes.string,
-  allExercises: PropTypes.array,
   currentExercise: PropTypes.object
 };
 
@@ -132,8 +121,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getSets(muscle, exercise, year, month, date) {
       dispatch(fetchSets(muscle, exercise, year, month, date));
     },
-    authUser: function(currentPath) {
-      dispatch(authUserFetch(currentPath));
+    authUser: function() {
+      dispatch(authUserFetch());
     }
   };
 };

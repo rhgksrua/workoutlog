@@ -39,11 +39,9 @@ function user(state = userInitialState, action) {
     case LOG_OUT:
       return { ...state, username: '', owner: false, pending: false, dirty: true };
     case NOT_OWNER:
-      //console.log('NOT_OWNER');
       return { ...state, owner: false, pending: false, dirty: true };
     case IS_OWNER:
       // checks if user is the owner of the current page.
-      //console.log('IS_OWNER');
       return { ...state, owner: action.owner, pending: false, dirty: true }
     default:
       return state;
@@ -100,7 +98,6 @@ function exercises(state = initialExercises, action) {
 
       if (index < 0) {
         // add new exercise
-        console.log('--- ACtION', action);
         newExercises.push({
           date: action.date,
           month: action.month,
@@ -110,7 +107,6 @@ function exercises(state = initialExercises, action) {
           sets: [ action.set ]
         });
       } else {
-        console.log('---- newExercises', index, newExercises, newExercises[index]);
         newExercises[index].sets.push(action.set);
       }
       return { ...state, allExercises: newExercises };
