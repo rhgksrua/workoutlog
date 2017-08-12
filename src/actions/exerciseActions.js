@@ -118,7 +118,7 @@ export const fetchSets = (muscle, exercise, year, month, date) => {
  *
  * @returns {undefined}
  */
-const addInitialSets = (exercise) => {
+export const addInitialSets = (exercise) => {
   return {
     type: ADD_SETS_ALL,
     exercise

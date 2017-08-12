@@ -16,7 +16,7 @@ import ExerciseSummary from './components/exercise/ExerciseSummary';
 import SignUp from './SignUp';
 import OwnerRoute from './components/routing/OwnerRoute';
 
-class App extends Component {
+export class App extends Component {
   render() {
     const { 
       username, 

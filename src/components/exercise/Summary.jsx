@@ -11,7 +11,7 @@ import Exercises from '../exercise/Exercises';
 
 import { setDate, fetchAllSets } from '../../actions/exerciseActions';
 
-class Summary extends Component {
+export class Summary extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);

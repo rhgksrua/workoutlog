@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Sets from './Sets';
 import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<Sets />);
 });
+
+

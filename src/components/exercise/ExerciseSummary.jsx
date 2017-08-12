@@ -8,8 +8,10 @@ import SetForm from './SetForm';
 
 // shows all sets for a single exercise
 
-class ExerciseSummary extends Component {
+export class ExerciseSummary extends Component {
+
   componentDidMount() {
+
     const { 
       currentDate: {
         year,
@@ -26,13 +28,14 @@ class ExerciseSummary extends Component {
 
     this.props.getSets(muscle, exercise, year, month, date);
 
-    // need to get user
   }
+
   render() {
+
     const { 
       currentDate: { year, month, date },
       todayExercise: {
-        sets: todaySets
+        sets: todaySets = []
       },
       match: {
         params: {
@@ -49,7 +52,6 @@ class ExerciseSummary extends Component {
           <p>Date {year} {month} {date}</p>
         </div>
         <SetForm 
-          handleSubmit={this.handleSubmit}
           year={year}
           month={month}
           date={date}
@@ -66,6 +68,7 @@ class ExerciseSummary extends Component {
     );
   }
 }
+
 
 const filterToday = (all, exerciseParam, muscleParam, year, month, date) => {
   const todayExerciseFilter = all.filter(exercise => {
@@ -91,16 +94,16 @@ ExerciseSummary.propTypes = {
   year: PropTypes.string,
   month: PropTypes.string,
   date: PropTypes.string,
-  currentExercise: PropTypes.object
 };
 
 const mapStateToProps = (state, props) => {
+
   const { 
     currentDate,
     currentDate: { year, month, date },
     exercises: { allExercises },
-    currentExercise
   } = state;
+
   const {
     match: {
       params: {
@@ -109,8 +112,10 @@ const mapStateToProps = (state, props) => {
       }
     }
   } = props;
+
   const todayExercise = filterToday(allExercises, exerciseParam, muscleParam, year, month, date);
-  return { currentDate, allExercises, currentExercise, todayExercise };
+
+  return { currentDate, todayExercise };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

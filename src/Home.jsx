@@ -11,7 +11,7 @@ import './Home.css';
  * Navigation authenticates for all routes
  */
 
-class Home extends Component {
+export class Home extends Component {
   render() {
     return (
       <div className="section home-container">

@@ -9,7 +9,7 @@ import { isOwnerFetch } from '../../actions/userActions';
  *
  * @returns {undefined}
  */
-class OwnerRoute extends Component {
+export class OwnerRoute extends Component {
   componentWillMount() {
     const { location, isOwner } = this.props;
     
@@ -31,7 +31,12 @@ class OwnerRoute extends Component {
 
     // check for log in status here
 
-    const currentPath = location.pathname.split('/')[1];
+    let currentPath;
+    try {
+      currentPath = location.pathname.split('/')[1];
+    } catch (e) {
+      currentPath = '/';
+    }
 
     return (
       <Route {...rest} render={props => {

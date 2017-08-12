@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import { fetchExerciseList, setMuscle, setExercise } from '../../actions/exerciseActions';
 import defaultExerciseList from '../../assets/muscles.json';
 
-class AddExercise extends Component {
+export class AddExercise extends Component {
   constructor(props) {
     super(props);
     this.handleExerciseList = this.handleExerciseList.bind(this);
@@ -30,7 +30,7 @@ class AddExercise extends Component {
       year, month, date
     }, handleSubmit, form, currentExercise: { muscle } } = this.props;
 
-    let exerciseList;
+    let exerciseList = null;
     let listOfExercises = null;
     let showExercise = null;
 
@@ -125,7 +125,7 @@ AddExercise.propTypes = {
   currentExercise: PropTypes.object
 };
 
-const AddExerciseFormWrapper = reduxForm({
+export const AddExerciseFormWrapper = reduxForm({
   form: 'workout'
 })(AddExercise);
 
