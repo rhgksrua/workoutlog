@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 import {
   ADD_SET,
   ADD_SETS_ALL,
