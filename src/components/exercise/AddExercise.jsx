@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import Date from '../date/Date';
 
 import { fetchExerciseList, setMuscle, setExercise } from '../../actions/exerciseActions';
 import defaultExerciseList from '../../assets/muscles.json';
@@ -26,9 +27,17 @@ export class AddExercise extends Component {
     myHandleSumbit(val, history, username);
   }
   render() {
-    const { currentDate: {
-      year, month, date
-    }, handleSubmit, form, currentExercise: { muscle } } = this.props;
+    const { 
+      currentDate,
+      currentDate: {
+        year, month, date
+      }, 
+      handleSubmit, 
+      form, 
+      currentExercise: { 
+        muscle 
+      } 
+    } = this.props;
 
     let exerciseList = null;
     let listOfExercises = null;
@@ -65,9 +74,7 @@ export class AddExercise extends Component {
     return (
       <div className="section add-exercise-container">
         <div className="columns">
-          <div className="column">
-            <p>{year} {month} {date}</p>
-          </div>
+          <Date {...currentDate} />
         </div>
         <div className="">
           <form onSubmit={handleSubmit(this.handleSubmit)}>

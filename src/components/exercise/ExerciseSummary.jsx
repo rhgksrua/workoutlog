@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSetAction, fetchSets } from '../../actions/exerciseActions';
 import { authUserFetch } from '../../actions/userActions';
+
 import Exercise from './Exercise';
 import SetForm from './SetForm';
+import Date from '../date/Date';
 
 // shows all sets for a single exercise
 
@@ -33,6 +35,7 @@ export class ExerciseSummary extends Component {
   render() {
 
     const { 
+      currentDate,
       currentDate: { year, month, date },
       todayExercise: {
         sets: todaySets = []
@@ -49,7 +52,7 @@ export class ExerciseSummary extends Component {
     return (
       <div>
         <div className={"section"}>
-          <p>Date {year} {month} {date}</p>
+          <Date {...currentDate} />
         </div>
         <SetForm 
           year={year}

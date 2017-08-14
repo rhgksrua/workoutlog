@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './datepicker.css';
 
 import Exercises from '../exercise/Exercises';
+import Date from '../date/Date';
 
 import { setDate, fetchAllSets } from '../../actions/exerciseActions';
 
@@ -44,11 +45,7 @@ export class Summary extends Component {
   }
   render() {
     const { 
-      currentDate: {
-        year, 
-        month, 
-        date
-      },
+      currentDate,
       todayExercises
     } = this.props;
 
@@ -60,9 +57,7 @@ export class Summary extends Component {
       <div className={"section"}>
         <h1 className="title">Summary</h1>
         <div className="columns">
-          <div className="column">
-            <p>{year} {month + 1} {date}</p>
-          </div>
+          <Date {...currentDate} />
         </div>
 
         <div className="columns">
