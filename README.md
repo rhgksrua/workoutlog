@@ -1,2 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+h3 TODO
+
+Update sets.  Use ObjectId to update redux storage and server db.

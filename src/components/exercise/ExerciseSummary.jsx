@@ -12,6 +12,7 @@ import Date from '../date/Date';
 
 export class ExerciseSummary extends Component {
 
+
   componentDidMount() {
 
     const { 
@@ -48,6 +49,8 @@ export class ExerciseSummary extends Component {
       },
       addSet
     } = this.props;
+
+    console.log('---- TODAY sets', todaySets);
 
     return (
       <div>
@@ -123,6 +126,9 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    update() {
+      //dispatch(updateSet(set));
+    },
     addSet(set, muscle, exercise, year, month, date) {
       dispatch(addSetAction(set, muscle, exercise, year, month, date));
     },

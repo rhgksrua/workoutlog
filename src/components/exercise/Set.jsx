@@ -9,7 +9,11 @@ class Set extends Component {
     const columnsStyle = {
       backgroundColor: '#d8d8d8',
       marginBottom: '20px'
+    };
 
+    const editStyle = {
+      height: '100%',
+      width: '100%'
     };
 
     return (
@@ -22,6 +26,9 @@ class Set extends Component {
         </div>
         <div className="column">
           <div style={columnStyle} className="notification">{weight} lbs</div>
+        </div>
+        <div className="column">
+          <button style={editStyle} className="button">EDIT</button>
         </div>
       </div>
     );
