@@ -5,7 +5,7 @@ import Set from './Set';
 
 class Sets extends Component {
   render() {
-    const { sets } = this.props;
+    const { sets, updateSet } = this.props;
     let setsElements;
     if (!sets) {
       setsElements = [];
@@ -17,6 +17,7 @@ class Sets extends Component {
             id={set._id}
             reps={set.reps}
             weight={set.weight}
+            updateSet={updateSet}
           />
         );
       });

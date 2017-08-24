@@ -79,8 +79,8 @@ function exercises(state = initialExercises, action) {
     case ADD_SET:
       const { allExercises } = state;
 
-      // copy of exercise array
-      const newExercises = allExercises.slice();
+      // DEEP copy of exercise array
+      const newExercises = JSON.parse(JSON.stringify(allExercises));
 
       // look for exercise index
       let index = -1;
@@ -107,6 +107,7 @@ function exercises(state = initialExercises, action) {
           sets: [ action.set ]
         });
       } else {
+        // add to existing exercise
         newExercises[index].sets.push(action.set);
       }
       return { ...state, allExercises: newExercises };

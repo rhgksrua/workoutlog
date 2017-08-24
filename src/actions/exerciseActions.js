@@ -101,10 +101,10 @@ export const fetchSets = (muscle, exercise, year, month, date) => {
         if (data.error) {
           throw new Error(data.error);
         }
-        //dispatch(addSet(set, muscle, exercise, year, month, date));
         if (!data.status) {
           console.warn('exercise not found');
         } else {
+          console.log('--- ADDING Initial sets');
           dispatch(addInitialSets(data.exercises[0]));
         }
 

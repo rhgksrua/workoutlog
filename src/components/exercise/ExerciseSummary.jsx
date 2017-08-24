@@ -40,7 +40,8 @@ export class ExerciseSummary extends Component {
           exercise: exerciseParam
         }
       },
-      addSet
+      addSet,
+      updateSet
     } = this.props;
     return (
       <div>
@@ -59,6 +60,7 @@ export class ExerciseSummary extends Component {
           name={exerciseParam}
           muscle={muscleParam}
           sets={todaySets}
+          updateSet={updateSet}
         />
       </div>
     );
@@ -116,8 +118,9 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    update() {
+    updateSet(set) {
       //dispatch(updateSet(set));
+      console.log('inside exercise summary update', set);
     },
     addSet(set, muscle, exercise, year, month, date) {
       dispatch(addSetAction(set, muscle, exercise, year, month, date));
