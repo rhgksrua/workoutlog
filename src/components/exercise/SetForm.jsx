@@ -10,48 +10,41 @@ class SetForm extends Component {
       weight: 0
     };
 
-    this.handleRepChange = this.handleRepChange.bind(this);
-    this.handleRepIncrease = this.handleRepIncrease.bind(this);
-    this.handleRepDecrease = this.handleRepDecrease.bind(this);
-    this.handleWeightChange = this.handleWeightChange.bind(this);
-    this.handleWeightIncrease = this.handleWeightIncrease.bind(this);
-    this.handleWeightDecrease = this.handleWeightDecrease.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleRepChange(e) {
+  handleRepChange = (e) => {
     const val = parseInt(e.target.value, 10);
     this.setState({
       reps: val
     });
   }
-  handleRepIncrease() {
+  handleRepIncrease = () => {
     this.setState({
       reps: this.state.reps + 1
     });
   }
-  handleRepDecrease() {
+  handleRepDecrease = () => {
     const decVal = this.state.reps - 1;
     this.setState({
       reps: decVal < 0 ? 0 : decVal
     });
   }
-  handleWeightChange(e) {
+  handleWeightChange = (e) => {
     this.setState({
       weight: parseInt(e.target.value, 10)
     });
   }
-  handleWeightIncrease() {
+  handleWeightIncrease = () => {
     this.setState({
       weight: this.state.weight + 5
     });
   }
-  handleWeightDecrease() {
+  handleWeightDecrease = () => {
     const decVal = this.state.weight - 5;
     this.setState({
       weight: decVal < 0 ? 0 : decVal
     });
   }
-  handleSubmit() {
+  handleSubmit = () => {
     const { 
       year, 
       month, 

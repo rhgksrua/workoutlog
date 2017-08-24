@@ -15,7 +15,6 @@ import { setDate, fetchAllSets } from '../../actions/exerciseActions';
 export class Summary extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
       startDate: moment()
     };
@@ -31,7 +30,7 @@ export class Summary extends Component {
 
     this.props.getAllSets(year, month, date);
   }
-  handleChange(userDate) {
+  handleChange = (userDate) => {
     this.setState({
       startDate: userDate
     });

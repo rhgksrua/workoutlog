@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    //this.logOut = this.logOut.bind(this);
   }
   componentWillMount() {
     // authenticates user here.

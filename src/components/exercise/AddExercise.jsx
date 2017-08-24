@@ -10,13 +10,11 @@ import defaultExerciseList from '../../assets/muscles.json';
 export class AddExercise extends Component {
   constructor(props) {
     super(props);
-    this.handleExerciseList = this.handleExerciseList.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleExerciseList(e) {
+  handleExerciseList = (e) => {
     this.props.getExercises(e.target.value);
   }
-  handleSubmit(val) {
+  handleSubmit = (val) => {
 
     if (!val.muscle || !val.exercise) {
       return;
