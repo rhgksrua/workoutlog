@@ -13,7 +13,7 @@ class Sets extends Component {
       setsElements = sets.map((set, index) => {
         return (
           <Set 
-            key={set._id}
+            key={index}
             id={set._id}
             reps={set.reps}
             weight={set.weight}

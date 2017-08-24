@@ -11,10 +11,7 @@ import Date from '../date/Date';
 // shows all sets for a single exercise
 
 export class ExerciseSummary extends Component {
-
-
   componentDidMount() {
-
     const { 
       currentDate: {
         year,
@@ -28,13 +25,9 @@ export class ExerciseSummary extends Component {
         }
       }
     } = this.props;
-
     this.props.getSets(muscle, exercise, year, month, date);
-
   }
-
   render() {
-
     const { 
       currentDate,
       currentDate: { year, month, date },
@@ -49,9 +42,6 @@ export class ExerciseSummary extends Component {
       },
       addSet
     } = this.props;
-
-    console.log('---- TODAY sets', todaySets);
-
     return (
       <div>
         <div className={"section"}>

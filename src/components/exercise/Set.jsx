@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Set extends Component {
+  handleClick = (e) => {
+  }
+  handleDelete = (e) => {
+  }
   render() {
     const { reps, weight } = this.props;
     const columnStyle = {
@@ -16,6 +20,12 @@ class Set extends Component {
       width: '100%'
     };
 
+    const deleteStyle = {
+      ...editStyle,
+      backgroundColor: 'red',
+      color: 'white'
+    };
+
     return (
       <div style={columnsStyle} className="columns">
         <div  className="column">
@@ -28,7 +38,10 @@ class Set extends Component {
           <div style={columnStyle} className="notification">{weight} lbs</div>
         </div>
         <div className="column">
-          <button style={editStyle} className="button">EDIT</button>
+          <button style={editStyle} className="button" onClick={this.handleClick}>EDIT</button>
+        </div>
+        <div className="column">
+          <button style={deleteStyle} className="button" onClick={this.handleDelete}>DELETE</button>
         </div>
       </div>
     );
