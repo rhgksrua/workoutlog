@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addSetAction, fetchSets } from '../../actions/exerciseActions';
+import { fetchUpdateSet, addSetAction, fetchSets } from '../../actions/exerciseActions';
 import { authUserFetch } from '../../actions/userActions';
 
 import Exercise from './Exercise';
@@ -119,8 +119,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateSet(set) {
-      //dispatch(updateSet(set));
       console.log('inside exercise summary update', set);
+      dispatch(fetchUpdateSet(set));
     },
     addSet(set, muscle, exercise, year, month, date) {
       dispatch(addSetAction(set, muscle, exercise, year, month, date));

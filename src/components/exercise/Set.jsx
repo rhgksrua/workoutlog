@@ -19,8 +19,12 @@ class Set extends Component {
     console.log('updated values', this.state.reps, this.state.weight);
     // update changed values here
     // send data to server and redux storage.
-    const { updateSet } = this.props;
-    updateSet({reps: this.state.reps, weight: this.state.weight});
+    const { updateSet, id } = this.props;
+    updateSet({
+      reps: this.state.reps, 
+      weight: this.state.weight,
+      id
+    });
     this.setState({
       editMode: !this.state.editMode
     });

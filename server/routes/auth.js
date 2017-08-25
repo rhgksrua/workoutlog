@@ -121,6 +121,39 @@ router.post('/user/exercises/sets/all',
   }
 );
 
+router.post('/user/exercises/sets/update', 
+  ejwt({secret: process.env.JWT_SECRET}),
+  function(req, res) {
+    const { body: { reps, weight, id } } = req;
+    console.log(reps, weight, id);
+    //console.log(body);
+    // update rep weight here
+    const query = {
+      //"sets._id": id
+      sets: { 
+        $elemMatch: {
+          _id: id
+        }
+      }
+    };
+    const up = {
+      $set: {
+        "sets.$.reps": reps,
+        "sets.$.weight": weight
+      }
+    }
+    //Exercise.findOneAndUpdate(query, up, function(err, match) {
+    Exercise.update(query, up, function(err, match) {
+      console.log(match);
+      if (!err) {
+        return res.json({status: true, error: false});
+      }
+      return res.json({status: false, error: 'db error'});
+    });
+    
+  }
+);
+
 
 router.put('/user/exercises', 
   ejwt({secret: process.env.JWT_SECRET}),

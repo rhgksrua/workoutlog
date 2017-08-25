@@ -14,7 +14,8 @@ import {
   ADD_ALL_SETS,
   SET_CURRENT_MUSCLE,
   SET_CURRENT_EXERCISE,
-  PENDING_USER
+  PENDING_USER,
+  UPDATE_SET
 } from '../actions/actionTypes';
 
 const userInitialState = {
@@ -69,21 +70,63 @@ const initialExercises = {
   allExercises: []
 }
 
-
 function exercises(state = initialExercises, action) {
+  const { allExercises } = state;
+  let newExercises;
+  let index;
   switch(action.type) {
     case ADD_SETS_ALL:
       return { ...state, allExercises: [ action.exercise ] };
     case ADD_ALL_SETS:
       return { ...state, allExercises: action.exercises };
+    case UPDATE_SET:
+      const { reps, weight, id } = action.set
+      console.log(reps, weight, id);
+      //const exercises = state.allExercises;
+      newExercises = JSON.parse(JSON.stringify(allExercises));
+
+      const newSet = {
+        reps: parseInt(reps, 10),
+        weight: parseInt(weight, 10),
+        _id: id
+      };
+
+      // I really should normalize all these data to avoid this crap.
+      let exerIndex = -1;
+      let setIndex = -1;
+      let endLoop = false;
+      for (let i = 0, len = newExercises.length; i < len; i++) {
+        let currentExercise = newExercises[i];
+        exerIndex = i;
+        for (let j = 0, jlen = currentExercise.sets.length; j < jlen; j++) {
+          let currentSet = currentExercise.sets[j];
+          setIndex = j;
+          if (currentSet._id === id) {
+            console.log('found match need to update set');
+            endLoop = true;
+            break;
+          }
+        }
+        if (endLoop) {
+          break;
+        }
+      }
+
+      console.log('--- found INDEX', exerIndex, setIndex);
+
+      console.log('--- Current SET', newExercises[exerIndex][setIndex]);
+      newExercises[exerIndex].sets[setIndex] = newSet;
+      console.log('-- UPDATED exercise', newExercises);
+
+      return { ...state, allExercises: newExercises };
     case ADD_SET:
-      const { allExercises } = state;
+      //const { allExercises } = state;
 
       // DEEP copy of exercise array
-      const newExercises = JSON.parse(JSON.stringify(allExercises));
+      newExercises = JSON.parse(JSON.stringify(allExercises));
 
       // look for exercise index
-      let index = -1;
+      index = -1;
       for (let i = 0, len = newExercises.length; i < len; i++) {
         let current = newExercises[i];
         if (current.date === action.date &&

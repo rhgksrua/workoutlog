@@ -6,12 +6,63 @@ import {
   ADD_ALL_SETS,
   SET_DATE,
   SET_CURRENT_MUSCLE,
-  SET_CURRENT_EXERCISE
+  SET_CURRENT_EXERCISE,
+  UPDATE_SET
 } from './actionTypes';
 
 // need to rename add sets all
 
 import { getToken } from '../lib/libs';
+
+export const updateSet = set => {
+  return {
+    type: UPDATE_SET,
+    set
+  };
+};
+
+export const fetchUpdateSet = (set) => {
+  return dispatch => {
+
+    const token = getToken();
+    if (!token) {
+      // should dispatch action that says user does not own the page
+      console.log('token missing. User needs to signin');
+      return;
+    }
+
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      credentials: 'same-origin',
+      method: 'post',
+      body: JSON.stringify(set)
+    }
+
+    return fetch(
+      `${window.location.protocol}//${window.location.host}/auth/user/exercises/sets/update`, 
+      options)
+        .then(data => {
+          return data.json();
+        })
+      .then(data => {
+        console.log('response from server', data);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        if (!data.status) {
+          console.warn('exercise not found');
+        } else {
+          dispatch(updateSet(set));
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+};
 
 export const setDate = (year, month, date) => {
   return {
