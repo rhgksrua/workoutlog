@@ -18,5 +18,9 @@ const exerciseSchema = mongoose.Schema({
   ]
 });
 
+exerciseSchema.statics.generateObjectId = function generateId() {
+  return mongoose.Types.ObjectId();
+}
+
 module.exports = mongoose.model('Exercise', exerciseSchema);
 

@@ -61,6 +61,7 @@ router.post('/user/exercises', function(req, res) {
   });
 });
 
+
 /**
  * TODO
  *
@@ -125,11 +126,7 @@ router.post('/user/exercises/sets/update',
   ejwt({secret: process.env.JWT_SECRET}),
   function(req, res) {
     const { body: { reps, weight, id } } = req;
-    console.log(reps, weight, id);
-    //console.log(body);
-    // update rep weight here
     const query = {
-      //"sets._id": id
       sets: { 
         $elemMatch: {
           _id: id
@@ -142,7 +139,6 @@ router.post('/user/exercises/sets/update',
         "sets.$.weight": weight
       }
     }
-    //Exercise.findOneAndUpdate(query, up, function(err, match) {
     Exercise.update(query, up, function(err, match) {
       console.log(match);
       if (!err) {
@@ -151,6 +147,33 @@ router.post('/user/exercises/sets/update',
       return res.json({status: false, error: 'db error'});
     });
     
+  }
+);
+
+router.delete('/user/exercises/sets',
+  ejwt({secret: process.env.JWT_SECRET}),
+  function(req, res) {
+    const { body: { id } } = req;
+    const query = {
+      sets: {
+        $eleMatch: {
+          _id: id
+        }
+      }
+    };
+    const condition = {
+      $pull: {
+        sets: {
+          _id: id
+        }
+      }
+    };
+    Exercise.update({}, condition, {multi: true}, function(err, match) {
+      if (err) {
+        return re.json({status: false, error: true, message: 'db error'});
+      }
+      return res.json({status: true, error: false});
+    });
   }
 );
 
@@ -182,22 +205,27 @@ router.put('/user/exercises',
       username
     };
 
+
     Exercise.find(query, function(err, workouts) {
       if (err) {
         return res.json({error: 'find error'});
       }
+
+      // add new ObjectId to set
+      const newId = Exercise.generateObjectId();
+      set._id = newId;
+
       if (workouts.length > 0) {
         workouts[0].sets.push(set);
         workouts[0].save(function(err, updatedExercise) {
           if (err) {
             return res.json({error: 'failed to update existing document'});
           } else {
-            return res.json({status: 'added to existing db'});
+            return res.json({status: 'added to existing db', id: newId});
           }
         });
         // found workout
       } else {
-        // add new exercise for the day.
         const newExercise = new Exercise();
         newExercise.date = date;
         newExercise.month = month;
@@ -210,7 +238,7 @@ router.put('/user/exercises',
           if (err) {
             return res.json({error: 'db error'});
           } else {
-            return res.json({status: 'good'});
+            return res.json({status: 'good', id: newId});
           }
         });
       }
