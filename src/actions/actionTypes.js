@@ -12,4 +12,5 @@ export const ADD_ALL_SETS = 'ADD_ALL_SETS';
 export const SET_CURRENT_MUSCLE = 'SET_CURRENT_MUSCLE';
 export const SET_CURRENT_EXERCISE = 'SET_CURRENT_EXERCISE';
 export const PENDING_USER = 'PENDING_USER';
-export const UPDATE_SET = 'UPDATE_DATE';
+export const UPDATE_SET = 'UPDATE_SET';
+export const DELETE_SET = 'DELETE_SET';

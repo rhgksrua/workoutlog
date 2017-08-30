@@ -15,7 +15,8 @@ import {
   SET_CURRENT_MUSCLE,
   SET_CURRENT_EXERCISE,
   PENDING_USER,
-  UPDATE_SET
+  UPDATE_SET,
+  DELETE_SET
 } from '../actions/actionTypes';
 
 const userInitialState = {
@@ -74,17 +75,26 @@ function exercises(state = initialExercises, action) {
   const { allExercises } = state;
   let newExercises;
   let index;
+  let exerIndex;
   switch(action.type) {
     case ADD_SETS_ALL:
       return { ...state, allExercises: [ action.exercise ] };
     case ADD_ALL_SETS:
       return { ...state, allExercises: action.exercises };
+    case DELETE_SET:
+      newExercises = JSON.parse(JSON.stringify(allExercises));
+      const removedExercise = newExercises.map(exercise => {
+        const removedSets = exercise.sets.filter(set => {
+          console.log('-- set ID', set._id);
+          return set._id !== action.id;
+        });
+        exercise.sets = removedSets;
+        return exercise;
+      });
+      return { ...state, allExercises: removedExercise };
     case UPDATE_SET:
       const { reps, weight, id } = action.set
-      console.log(reps, weight, id);
-      //const exercises = state.allExercises;
       newExercises = JSON.parse(JSON.stringify(allExercises));
-
       const newSet = {
         reps: parseInt(reps, 10),
         weight: parseInt(weight, 10),
@@ -92,7 +102,7 @@ function exercises(state = initialExercises, action) {
       };
 
       // I really should normalize all these data to avoid this crap.
-      let exerIndex = -1;
+      exerIndex = -1;
       let setIndex = -1;
       let endLoop = false;
       for (let i = 0, len = newExercises.length; i < len; i++) {
@@ -111,16 +121,11 @@ function exercises(state = initialExercises, action) {
           break;
         }
       }
-
-      console.log('--- found INDEX', exerIndex, setIndex);
-
-      console.log('--- Current SET', newExercises[exerIndex][setIndex]);
       newExercises[exerIndex].sets[setIndex] = newSet;
-      console.log('-- UPDATED exercise', newExercises);
-
       return { ...state, allExercises: newExercises };
     case ADD_SET:
-      //const { allExercises } = state;
+
+      console.log('=== check for id in add_set', action);
 
       // DEEP copy of exercise array
       newExercises = JSON.parse(JSON.stringify(allExercises));
@@ -186,12 +191,13 @@ function currentExercise(state = {}, action) {
   }
 }
 
-
-export default combineReducers({
+export const allReducers = {
   user,
   exercises,
   exerciseList,
   currentDate,
   currentExercise,
   form: formReducer
-});
+};
+
+export default combineReducers(allReducers);

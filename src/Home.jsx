@@ -23,7 +23,7 @@ export class Home extends Component {
 
 Home.propTypes = {
   username: PropTypes.string
-}
+};
 
 const mapStateToProps = (state, props) => {
   const { user: { username } } = state;

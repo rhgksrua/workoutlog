@@ -18,8 +18,8 @@ import OwnerRoute from './components/routing/OwnerRoute';
 
 export class App extends Component {
   render() {
-    const { 
-      username, 
+    const {
+      username,
       logOut,
       authUser
     } = this.props;
@@ -30,7 +30,10 @@ export class App extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={SignUp} />
           <OwnerRoute path="/:username/add" component={AddExercise} />
-          <OwnerRoute path="/:username/:muscle/:exercise" component={ExerciseSummary} />
+          <OwnerRoute
+            path="/:username/:muscle/:exercise"
+            component={ExerciseSummary}
+          />
           <OwnerRoute path="/:username" component={Summary} />
         </Switch>
       </div>
@@ -44,9 +47,9 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const { 
-    user: { 
-      username 
+  const {
+    user: {
+      username
     }
   } = state;
   return { username };

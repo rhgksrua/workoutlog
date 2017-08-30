@@ -14,6 +14,9 @@ class Set extends Component {
     });
   }
   handleDelete = (e) => {
+    console.log('delete set');
+    const { deleteSet, id } = this.props;
+    deleteSet(id);
   }
   handleUpdate = (e) => {
     console.log('updated values', this.state.reps, this.state.weight);

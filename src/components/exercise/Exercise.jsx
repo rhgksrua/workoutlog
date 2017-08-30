@@ -17,14 +17,24 @@ class Exercise extends Component {
       marginLeft: '10px'
     };
 
-    const { name, muscle, sets, updateSet } = this.props;
+    const { 
+      name, 
+      muscle, 
+      sets, 
+      updateSet,
+      deleteSet
+    } = this.props;
     return (
       <div className="section exercise-container">
         <div>
           <p style={exerStyles}>{name}</p>
           <p style={muscleStyles} className="muscle-name">{muscle}</p>
         </div>
-        <Sets sets={sets} updateSet={updateSet}/>
+        <Sets 
+          sets={sets} 
+          updateSet={updateSet}
+          deleteSet={deleteSet}
+        />
       </div>
     );
   }

@@ -7,12 +7,63 @@ import {
   SET_DATE,
   SET_CURRENT_MUSCLE,
   SET_CURRENT_EXERCISE,
-  UPDATE_SET
+  UPDATE_SET,
+  DELETE_SET
 } from './actionTypes';
 
 // need to rename add sets all
 
 import { getToken } from '../lib/libs';
+
+export const deleteSetAction = id => {
+  return {
+    type: DELETE_SET,
+    id
+  };
+};
+
+export const deleteSet = id => {
+  return dispatch => {
+
+    const token = getToken();
+    if (!token) {
+      // should dispatch action that says user does not own the page
+      console.log('token missing. User needs to signin');
+      return;
+    }
+
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json');
+    const options = {
+      headers,
+      credentials: 'same-origin',
+      method: 'delete',
+      body: JSON.stringify({ id })
+    }
+
+    return fetch(
+      `${window.location.protocol}//${window.location.host}/auth/user/exercises/sets`, 
+      options)
+        .then(data => {
+          return data.json();
+        })
+      .then(data => {
+        console.log('response from server', data);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        if (!data.status) {
+          console.warn('exercise not found');
+        } else {
+          dispatch(deleteSetAction(id));
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+}
 
 export const updateSet = set => {
   return {
@@ -218,6 +269,7 @@ export const addSetAction = (set, muscle, exercise, year, month, date) => {
         if (data.error) {
           throw new Error(data.error);
         }
+        set._id = data.id;
         dispatch(addSet(set, muscle, exercise, year, month, date));
       })
       .catch(err => {

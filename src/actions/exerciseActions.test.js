@@ -134,6 +134,17 @@ describe('exercise actions', () => {
     expect(actions.addNewExerciseList(name, list)).toEqual(expectedAction);
 
   });
+
+  it('creates action to delete a set', () => {
+    const id = '12345';
+
+    const expectedAction = {
+      type: 'DELETE_SET',
+      id
+    };
+
+    expect(actions.deleteSetAction(id)).toEqual(expectedAction);
+  });
 });
 
 describe('async exercise actions', () => {
@@ -236,6 +247,49 @@ describe('async exercise actions', () => {
     return store.dispatch(actions.fetchListOfExercises(muscle)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('deletes a set from exercise from id', () => {
+
+    const id = '123';
+
+    nock(url)
+      .delete('/auth/user/exercises/sets', { id })
+      .reply(200, {status: true});
+
+    const expectedActions = [
+      { type: types.DELETE_SET, id }
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.deleteSet(id)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('updates a set', () => {
+
+    const set = {
+      reps: 1,
+      weight: 1,
+      _id: 123
+    };
+
+    nock(url)
+      .post('/auth/user/exercises/sets/update')
+      .reply(200, {status: true});
+
+    const expectedActions = [
+      { type: types.UPDATE_SET, set }
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.fetchUpdateSet(set)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
   });
 
 });
