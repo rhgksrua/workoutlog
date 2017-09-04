@@ -14,3 +14,5 @@ export const SET_CURRENT_EXERCISE = 'SET_CURRENT_EXERCISE';
 export const PENDING_USER = 'PENDING_USER';
 export const UPDATE_SET = 'UPDATE_SET';
 export const DELETE_SET = 'DELETE_SET';
+export const UPDATE_LIST = 'UPDATE_LIST';
+export const ADD_LIST = 'ADD_LIST';
