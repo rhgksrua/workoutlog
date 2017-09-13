@@ -33,15 +33,18 @@ class Set extends Component {
     });
   }
   handleNoteChange = (e) => {
+    // need to implement
   }
   handleRepChange = (e) => {
+    const newVal = e.target.value;
     this.setState({
-      reps: e.target.value
+      reps: newVal < 0 ? 0 : e.target.value
     });
   }
   handleWeightChange = (e) => {
+    const newWeight = e.target.value;
     this.setState({
-      weight: e.target.value
+      weight: newWeight < 0 ? 0 : e.target.value
     });
   }
   render() {
@@ -83,28 +86,70 @@ class Set extends Component {
             <div style={columnStyle} className="notification">{weight} lbs</div>
           </div>
           <div className="column">
-            <button style={editStyle} className="button" onClick={this.handleClick}>EDIT</button>
+            <button 
+              style={editStyle} 
+              className="button" 
+              onClick={this.handleClick}
+            >
+              EDIT
+            </button>
           </div>
           <div className="column">
-            <button style={deleteStyle} className="button" onClick={this.handleDelete}>DELETE</button>
+            <button 
+              style={deleteStyle} 
+              className="button" 
+              onClick={this.handleDelete}
+            >
+              DELETE
+            </button>
           </div>
         </div>
         ) : (
         <div style={columnsStyle} className="columns">
           <div className="column">
-            <input style={inputStyle} className="notification" type="text" value={this.state.note} onChange={this.handleNoteChange} />
+            <input 
+              style={inputStyle} 
+              className="notification" 
+              type="text" 
+              value={this.state.note} 
+              onChange={this.handleNoteChange} 
+            />
           </div>
           <div className="column">
-            <input style={inputStyle} className="notification" type="text" value={this.state.reps} onChange={this.handleRepChange} />
+            <input 
+              style={inputStyle} 
+              className="notification" 
+              type="text" 
+              value={this.state.reps} 
+              onChange={this.handleRepChange} 
+            />
           </div>
           <div className="column">
-            <input style={inputStyle} className="notification" type="text" value={this.state.weight} onChange={this.handleWeightChange} />
+            <input 
+              style={inputStyle} 
+              className="notification" 
+              type="text" 
+              value={this.state.weight} 
+              onChange={this.handleWeightChange} 
+            />
           </div>
           <div className="column">
-            <button style={editStyle} className="button" onClick={this.handleUpdate}>UPDATE</button>
+            <button 
+              style={editStyle} 
+              className="button" 
+              onClick={this.handleUpdate}
+            >
+              UPDATE
+            </button>
           </div>
           <div className="column">
-            <button style={deleteStyle} className="button" onClick={this.handleDelete}>DELETE</button>
+            <button 
+              style={deleteStyle} 
+              className="button" 
+              onClick={this.handleDelete}
+            >
+              DELETE
+            </button>
           </div>
         </div>
         )}

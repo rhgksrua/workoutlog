@@ -135,8 +135,8 @@ router.post('/user/exercises/sets/update',
     };
     const up = {
       $set: {
-        "sets.$.reps": reps,
-        "sets.$.weight": weight
+        "sets.$.reps": reps > 0 ? reps : 0,
+        "sets.$.weight": weight > 0 ? weight : 0
       }
     }
     Exercise.update(query, up, function(err, match) {
