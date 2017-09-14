@@ -12,6 +12,17 @@ const initialExercises = {
   allExercises: []
 }
 
+function deleteSet(exercises, id) {
+  const removedExercise = exercises.map(exercise => {
+    const removedSets = exercise.sets.filter(set => {
+      return set._id !== id;
+    });
+    exercise.sets = removedSets;
+    return exercise;
+  });
+  return removedExercise;
+}
+
 function exercises(state = initialExercises, action) {
   const { allExercises } = state;
   let newExercises;
@@ -24,14 +35,8 @@ function exercises(state = initialExercises, action) {
       return { ...state, allExercises: action.exercises };
     case DELETE_SET:
       newExercises = JSON.parse(JSON.stringify(allExercises));
-      const removedExercise = newExercises.map(exercise => {
-        const removedSets = exercise.sets.filter(set => {
-          return set._id !== action.id;
-        });
-        exercise.sets = removedSets;
-        return exercise;
-      });
-      return { ...state, allExercises: removedExercise };
+      const removedExercises = deleteSet(newExercises, action.id);
+      return { ...state, allExercises: removedExercises };
     case UPDATE_SET:
       const { reps, weight, id } = action.set
       newExercises = JSON.parse(JSON.stringify(allExercises));
@@ -101,6 +106,9 @@ function exercises(state = initialExercises, action) {
     default:
       return state;
   }
+}
+
+function findIndex() {
 }
 
 export default exercises;
